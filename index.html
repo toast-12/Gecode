@@ -6,6 +6,212 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GeCode</title>
   <link rel="stylesheet" href="/style.css">
+  <style>
+    /* General body styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #f0f0f0; /* Light background */
+  color: #333; /* Dark text color for contrast */
+  overflow: hidden;
+}
+
+/* Main container styles */
+main {
+  text-align: center;
+  background: #ffffff; /* White background */
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 80%;
+  max-width: 1000px;
+  position: relative;
+  overflow: hidden;
+  border: 5px solid transparent;
+  background-clip: padding-box;
+  animation: gradient-border 3s infinite alternate;
+}
+
+@keyframes gradient-border {
+  0% {
+    border-color: #a8dadc; /* Light blue */
+    box-shadow: 0 0 15px rgba(168, 218, 220, 0.7);
+  }
+  100% {
+    border-color: #f0a6a8; /* Light pink */
+    box-shadow: 0 0 15px rgba(240, 166, 168, 0.7);
+  }
+}
+
+/* File picker and button styles */
+.file-picker {
+  margin: 20px;
+}
+
+.file-picker label {
+  display: inline-block;
+  background-color: #007bff; /* Blue background */
+  color: white;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.file-picker input[type="file"] {
+  display: none;
+}
+
+.file-picker:hover label {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.05);
+}
+
+.submit-btn {
+  background-color: #28a745; /* Green background */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease, background-image 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn:hover {
+  background-color: #218838; /* Darker green */
+  background-image: linear-gradient(135deg, #28a745, #218838);
+  transform: scale(1.05);
+}
+
+/* Code container styles */
+.code-container {
+  position: relative;
+  margin-top: 20px;
+  width: 100%;
+  text-align: left;
+  overflow: hidden;
+}
+
+.code-preview {
+  background-color: #282c34; /* Dark code background */
+  color: #abb2bf; /* Light text color for code */
+  border-radius: 5px;
+  padding: 15px;
+  overflow-y: auto; /* Enable vertical scrolling */
+  white-space: pre-wrap;
+  text-align: left;
+  margin: 0;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  border: 1px solid #007bff; /* Blue border */
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.7);
+  max-height: 400px; /* Set a maximum height */
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+button{
+  border: 0px;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  margin-top: 10px;
+  margin-left: 10px;
+  transition: all 2s ease-in-out;
+}
+
+button:hover{
+  transition: all 2s ease-in-out;
+  animation: gradient-border 3s infinite alternate;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+   border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: #ffc107; /* Yellow background */
+  color: #333;
+  border: none;
+ transition: background-color 0.3s ease, transform 0.3s ease, background-image 0.3s ease;
+  animation: bounce-btn 2s infinite;
+}
+
+@keyframes bounce-btn {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.copy-btn:hover {
+  background-color: #e0a800; /* Darker yellow on hover */
+  background-image: linear-gradient(135deg, #ffc107, #e0a800);
+  transform: scale(1.05);
+}
+
+/* Error notification styles */
+.error-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #f44336;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: slide-in 0.5s ease-out;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.error-notification button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Output styles */
+.output {
+  margin-top: 20px;
+  font-size: 16px;
+}
+  </style>
 </head>
 
 <body>
