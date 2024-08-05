@@ -4,58 +4,66 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GeCode - 이미지로 코드를 쉽게 만들어 보세요.</title>
-  <link rel="stylesheet" href="style.css">
+  <title>GeCode</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
   <main>
-    <h1 style="padding-left: 10px; padding-right: 10px;" >GeCode - 이미지를 코드로 쉽게 만들어 보세요.</h1>
+    <h1>GeCode</h1>
     <form>
-      <div class="file-picker">
-        <label>
-          <input type="file" name="chosen-image" accept="image/*">
-          Choose an image
+      <div class="image-upload">
+        <label for="imageInput">
+          <input type="file" id="imageInput" accept="image/*">
+          <div class="image-preview">
+            <img id="previewImage" src="" alt="이미지 파일을 선택하려면 여기를 누르세요" />
+          </div>
         </label>
       </div>
-      <img class="image-preview" src="" alt="Image preview">
-      <div class="language-box">
-        <label>
-          Select language:
-          <select name="language">
-            <option value="JavaScript">JavaScript</option>
-            <option value="Python">Python</option>
-            <option value="Java">Java</option>
-            <option value="C++">C++</option>
-            <option value="C#">C#</option>
-            <option value="Ruby">Ruby</option>
-            <option value="PHP">PHP</option>
-            <option value="Swift">Swift</option>
-            <option value="Go">Go</option>
-            <option value="Kotlin">Kotlin</option>
-            <option value="TypeScript">TypeScript</option>
-            <option value="R">R</option>
-            <option value="Perl">Perl</option>
-            <option value="Scala">Scala</option>
-            <option value="Rust">Rust</option>
-            <option value="Haskell">Haskell</option>
-            <option value="MATLAB">MATLAB</option>
-            <option value="SQL">SQL</option>
-            <option value="html">html, css, js</option>
-            <!-- Add more languages as needed -->
-          </select>
-        </label>
+      <div class="language-selection">
+        <label for="languageSelect">Select Language:</label>
+        <select id="languageSelect">
+          <option value="python">Python</option>
+          <option value="javascript">JavaScript</option>
+          <option value="java">Java</option>
+          <option value="csharp">C#</option>
+          <option value="ruby">Ruby</option>
+          <option value="php">PHP</option>
+          <option value="swift">Swift</option>
+          <option value="go">Go</option>
+          <option value="typescript">TypeScript</option>
+          <option value="html">HTML</option>
+          <option value="css">CSS</option>
+          <option value="sql">SQL</option>
+          <option value="r">R</option>
+          <option value="kotlin">Kotlin</option>
+          <option value="perl">Perl</option>
+          <option value="scala">Scala</option>
+          <option value="shell">Shell</option>
+          <option value="groovy">Groovy</option>
+          <option value="rust">Rust</option>
+          <option value="other">Other (Specify below)</option>
+        </select>
+      </div>
+      
+      <div id="advancedOptions" class="advanced-options" style="display: none;">
+        <label for="additionalInstructionsInput">Additional Instructions:</label>
+        <textarea id="additionalInstructionsInput" placeholder="Enter additional instructions here"></textarea>
       </div>
       <div class="prompt-box">
+        <label>
+          <input name="prompt" id="promptInput" type="text" 
+            value="Express the components in the image as code." style="display: none;">
+        </label>
         <button type="submit">Go</button>
       </div>
+      <button type="button" id="moreOptionsBtn">More Options</button>
     </form>
-    <div class="code-container">
-      <button id="copy-btn">Copy Code</button>
-      <pre id="code-preview" class="code-preview"><code></code></pre>
-    </div>
+    <button id="copyButton">Code Copy</button>
     <p class="output">(Results will appear here)</p>
   </main>
-  <script type="module" src="./main.js"></script>
+
+  <script type="module" src="/main.js"></script>
 </body>
+
 </html>
