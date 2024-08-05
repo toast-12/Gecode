@@ -15,3 +15,11 @@
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@google/generative-ai": ["node_modules/@google/generative-ai/dist/index.ts"]
+    }
+  }
+}
