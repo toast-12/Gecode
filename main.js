@@ -1,12 +1,13 @@
-import something from './node_modules/@google/generative-ai/dist/index.ts';
 import Base64 from 'base64-js';
 import MarkdownIt from 'markdown-it';
 import { maybeShowApiKeyBanner } from '../gemini-api-banner';
 import './style.css';
-import something from '@google/generative-ai';
+import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
 
+// API 키 설정
 let API_KEY = 'AIzaSyBt4-KPEwmHT0sMzEN8d3wQ7sJIcH5QjBI';
 
+// DOM 요소 가져오기
 let form = document.querySelector('form');
 let fileInput = document.querySelector('input[name="chosen-image"]');
 let languageSelect = document.querySelector('select[name="language"]');
@@ -15,7 +16,7 @@ let imagePreview = document.querySelector('.image-preview');
 let codePreview = document.querySelector('#code-preview code');
 let copyBtn = document.querySelector('#copy-btn');
 
-// Function to show error notification
+// 오류 알림 표시 함수
 function showErrorNotification(message) {
   let notification = document.createElement('div');
   notification.className = 'error-notification';
@@ -26,11 +27,12 @@ function showErrorNotification(message) {
   document.body.appendChild(notification);
 }
 
-// Function to handle repeated attempts
+// 반복 시도 처리 함수
 function handleRepeatedAttempts() {
   window.location.href = 'repeated-attempts.html';
 }
 
+// 폼 제출 이벤트 처리기
 form.onsubmit = async (ev) => {
   ev.preventDefault();
   output.textContent = 'Generating...';
@@ -90,14 +92,14 @@ form.onsubmit = async (ev) => {
       }
       buffer.push(response.text());
       let markdownContent = md.render(buffer.join(''));
-      codePreview.textContent = markdownContent; // Display the generated code
+      codePreview.textContent = markdownContent; // 생성된 코드 표시
     }
   } catch (e) {
     output.innerHTML += '<hr>' + e;
   }
 };
 
-// Preview the uploaded image
+// 업로드된 이미지 미리보기
 fileInput.addEventListener('change', () => {
   let file = fileInput.files[0];
   if (file) {
@@ -109,7 +111,7 @@ fileInput.addEventListener('change', () => {
   }
 });
 
-// Handle copy button click
+// 복사 버튼 클릭 처리기
 copyBtn.addEventListener('click', () => {
   navigator.clipboard.writeText(codePreview.textContent)
     .then(() => {
@@ -120,17 +122,14 @@ copyBtn.addEventListener('click', () => {
     });
 });
 
-// You can delete this once you've filled out an API key
+// API 키 배너 표시 함수 호출 (API 키 설정 후 삭제 가능)
 maybeShowApiKeyBanner(API_KEY);
 
-// Import the functions you need from the SDKs you need
+// 필요한 Firebase SDK 가져오기
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase 구성
 const firebaseConfig = {
   apiKey: "AIzaSyCdKIhZSQWJuZOpKWKirw4iwyj6isln9DU",
   authDomain: "gemath-deb68.firebaseapp.com",
@@ -141,7 +140,6 @@ const firebaseConfig = {
   measurementId: "G-2R85V6EHT1"
 };
 
-// Initialize Firebase
+// Firebase 초기화
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-
