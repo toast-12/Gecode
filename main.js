@@ -1,10 +1,10 @@
-import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from "/node_modules/.vite/deps/@google_generative-ai.js?v=56798126";
-import __vite__cjsImport1_base64Js from "/node_modules/.vite/deps/base64-js.js?v=67fdc565"; const Base64 = __vite__cjsImport1_base64Js.__esModule ? __vite__cjsImport1_base64Js.default : __vite__cjsImport1_base64Js;
-import __vite__cjsImport2_markdownIt from "/node_modules/.vite/deps/markdown-it.js?v=f4c11356"; const MarkdownIt = __vite__cjsImport2_markdownIt.__esModule ? __vite__cjsImport2_markdownIt.default : __vite__cjsImport2_markdownIt;
-import { maybeShowApiKeyBanner } from "/gemini-api-banner.js";
-import "/style.css?t=1722775764016";
+import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from "@google/generative-ai";
+import Base64 from 'base64-js';
+import MarkdownIt from 'markdown-it';
+import { maybeShowApiKeyBanner } from '../gemini-api-banner';
+import './style.css';
 
-let API_KEY = 'AIzaSyAV5Vrz5C7-uuYTQTBhIOtz3TBmEaKcgs8';
+let API_KEY = 'AIzaSyBt4-KPEwmHT0sMzEN8d3wQ7sJIcH5QjBI';
 
 let form = document.querySelector('form');
 let fileInput = document.querySelector('input[name="chosen-image"]');
@@ -121,3 +121,25 @@ copyBtn.addEventListener('click', () => {
 
 // You can delete this once you've filled out an API key
 maybeShowApiKeyBanner(API_KEY);
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyANmtK7cGNvzavsIJrJjFpv6os7-4TGr00",
+  authDomain: "gecode-91c11.firebaseapp.com",
+  projectId: "gecode-91c11",
+  storageBucket: "gecode-91c11.appspot.com",
+  messagingSenderId: "538838422085",
+  appId: "1:538838422085:web:8287f0cd2f3f61ccf7892c",
+  measurementId: "G-78ZRRZBYZ2"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
