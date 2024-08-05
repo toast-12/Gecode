@@ -3,6 +3,7 @@ import Base64 from 'base64-js';
 import MarkdownIt from 'markdown-it';
 import { maybeShowApiKeyBanner } from '../gemini-api-banner';
 import './style.css';
+import something from '@google/generative-ai';
 
 let API_KEY = 'AIzaSyBt4-KPEwmHT0sMzEN8d3wQ7sJIcH5QjBI';
 
