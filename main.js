@@ -1,14 +1,8 @@
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from "./node_modules/@google/generative-ai";
-import Base64 from './base64-js';
 import MarkdownIt from './markdown-it';
 import { maybeShowApiKeyBanner } from './gemini-api-banner';
 
-// 🔥🔥 FILL THIS OUT FIRST! 🔥🔥
-// Get your Gemini API key by:
-// - Selecting "Add Gemini API" in the "Project IDX" panel in the sidebar
-// - Or by visiting https://g.co/ai/idxGetGeminiKey
-let API_KEY = 'AIzaSyBt4-KPEwmHT0sMzEN8d3wQ7sJIcH5QjBI';
-
+// Initialize DOM elements
 let form = document.querySelector('form');
 let promptInput = document.getElementById('promptInput');
 let output = document.querySelector('.output');
@@ -20,7 +14,7 @@ let advancedOptionsDiv = document.getElementById('advancedOptions');
 let additionalInstructionsInput = document.getElementById('additionalInstructionsInput');
 
 // Update the image preview when a file is selected
-imageInput.addEventListener('change', async (event) => {
+imageInput.addEventListener('change', (event) => {
   let file = event.target.files[0];
   if (file) {
     let reader = new FileReader();
@@ -31,13 +25,9 @@ imageInput.addEventListener('change', async (event) => {
   }
 });
 
-// Show or hide advanced options
+// Toggle advanced options visibility
 moreOptionsBtn.addEventListener('click', () => {
-  if (advancedOptionsDiv.style.display === 'none') {
-    advancedOptionsDiv.style.display = 'block';
-  } else {
-    advancedOptionsDiv.style.display = 'none';
-  }
+  advancedOptionsDiv.style.display = advancedOptionsDiv.style.display === 'none' ? 'block' : 'none';
 });
 
 // Handle form submission
@@ -46,17 +36,18 @@ form.onsubmit = async (ev) => {
   output.textContent = 'Generating...';
 
   try {
-    // Convert the selected image file to base64
+    // Validate image file selection
     let imageFile = imageInput.files[0];
     if (!imageFile) {
       throw new Error('Please upload an image file.');
     }
-    
+
+    // Convert image to base64
     let reader = new FileReader();
     reader.onloadend = async () => {
       let imageBase64 = reader.result.split(',')[1]; // Extract base64 part
 
-      // Update the prompt based on the selected language
+      // Prepare prompt text
       let language = languageSelect.value;
       let additionalInstructions = additionalInstructionsInput.value.trim();
       let promptText = `Express the components in the image as code in ${language}.`;
@@ -65,7 +56,7 @@ form.onsubmit = async (ev) => {
       }
       promptInput.value = promptText;
 
-      // Assemble the prompt by combining the text with the chosen image
+      // Prepare the content to send to the model
       let contents = [
         {
           role: 'user',
@@ -77,9 +68,9 @@ form.onsubmit = async (ev) => {
       ];
 
       // Initialize the generative model
-      const genAI = new GoogleGenerativeAI(API_KEY);
+      const genAI = new GoogleGenerativeAI(); // Initialize without API key (use environment variable or other secure method)
       const model = genAI.getGenerativeModel({
-        model: "gemini-1.5-flash", // or gemini-1.5-pro
+        model: "gemini-1.5-flash", // Adjust model as needed
         safetySettings: [
           {
             category: HarmCategory.HARM_CATEGORY_HARASSMENT,
@@ -88,10 +79,10 @@ form.onsubmit = async (ev) => {
         ],
       });
 
-      // Call the multimodal model, and get a stream of results
+      // Call the model and get the results
       const result = await model.generateContentStream({ contents });
 
-      // Read from the stream and interpret the output as markdown
+      // Process and display the results
       let buffer = [];
       let md = new MarkdownIt();
       for await (let response of result.stream) {
@@ -101,30 +92,27 @@ form.onsubmit = async (ev) => {
     };
     reader.readAsDataURL(imageFile);
   } catch (e) {
-    output.innerHTML += '<hr>' + e;
+    output.innerHTML = `<hr>Error: ${e.message}`;
   }
 };
 
-// Display the API key banner if needed
-maybeShowApiKeyBanner(API_KEY);
+// Display API key banner if necessary
+maybeShowApiKeyBanner();
 
-document.getElementById('copyButton').addEventListener('click', function() {
-  // Assuming the text to copy is inside the output element
-  const outputText = document.querySelector('.output').innerText;
-  
-  // Create a temporary textarea element to use for copying
+// Handle copy button click
+document.getElementById('copyButton').addEventListener('click', () => {
+  const outputText = output.innerText;
+
+  // Create a temporary textarea element for copying text
   const textarea = document.createElement('textarea');
   textarea.value = outputText;
   document.body.appendChild(textarea);
-  
+
   // Select and copy the text
   textarea.select();
   document.execCommand('copy');
-  
-  // Remove the temporary textarea
+
+  // Clean up and notify user
   document.body.removeChild(textarea);
-  
-  // Optionally, provide user feedback
   alert('Copied to clipboard!');
 });
-
