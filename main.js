@@ -2,7 +2,6 @@ import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from "./node_mod
 import Base64 from './base64-js';
 import MarkdownIt from './markdown-it';
 import { maybeShowApiKeyBanner } from './gemini-api-banner';
-import '../style.css';
 
 // 🔥🔥 FILL THIS OUT FIRST! 🔥🔥
 // Get your Gemini API key by:
